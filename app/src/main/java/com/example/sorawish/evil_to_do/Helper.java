@@ -24,7 +24,7 @@ public class Helper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = String.format("CREATE TABLE %s (ID INTEGER PRIMARY KEY AUTOINCREMENT,%s TEXT NOT NULL",dbTable,dbColumn);
+        String query = String.format("CREATE TABLE %s (ID INTEGER PRIMARY KEY AUTOINCREMENT,%s TEXT NOT NULL);",dbTable,dbColumn);
         db.execSQL(query);
     }
 
@@ -35,7 +35,7 @@ public class Helper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertNewTask(String task){
+    public void insertTask(String task){
         SQLiteDatabase db= this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(dbColumn,task);
@@ -45,7 +45,7 @@ public class Helper extends SQLiteOpenHelper {
 
     public void deleteTask(String task){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(dbTable,dbColumn+" = ?",new String[]{task});
+        db.delete(dbTable,dbColumn + " = ?",new String[]{task});
         db.close();
     }
 
