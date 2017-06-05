@@ -31,5 +31,18 @@ public class Helper extends SQLiteOpenHelper {
         db.execSQL(query);
         onCreate(db);
     }
-    
+
+    public void insertNewTask(String task){
+        SQLiteDatabase db= this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(dbColumn,task);
+        db.insertWithOnConflict(dbTable,null,values,SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();
+    }
+
+    public void deleteTask(String task){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(dbTable,dbColumn+" = ?",new String[]{task});
+        db.close();
+    }
 }
