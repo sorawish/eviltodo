@@ -31,27 +31,26 @@ public class MainActivity extends AppCompatActivity {
 
         helper = new Helper(this);
 
-        listTask = (ListView)findViewById(R.id.listTask);
+        listTask = (ListView) findViewById(R.id.listTask);
 
         loadTaskList();
     }
 
     private void loadTaskList() {
         ArrayList<String> taskList = helper.getTaskList();
-        if(adapter==null){
-            adapter = new ArrayAdapter<String>(this,R.layout.row,R.id.task_title,taskList);
+        if (adapter == null) {
+            adapter = new ArrayAdapter<String>(this, R.layout.row, R.id.taskTitle, taskList);
             listTask.setAdapter(adapter);
-        }
-        else{
+        } else {
             adapter.clear();
             adapter.addAll(taskList);
             adapter.notifyDataSetChanged();
         }
     }
 
-    public void deleteTask(View view){
-        View parent = (View)view.getParent();
-        TextView taskTextView = (TextView)parent.findViewById(R.id.task_title);
+    public void deleteTask(View view) {
+        View parent = (View) view.getParent();
+        TextView taskTextView = (TextView) parent.findViewById(R.id.taskTitle);
         Log.e("String", (String) taskTextView.getText());
         String task = String.valueOf(taskTextView.getText());
         helper.deleteTask(task);
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
 
         Drawable icon = menu.getItem(0).getIcon();
         icon.mutate();
@@ -71,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_add_task:
                 final EditText taskEditText = new EditText(this);
                 AlertDialog dialog = new AlertDialog.Builder(this)
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                                 loadTaskList();
                             }
                         })
-                        .setNegativeButton("Cancel",null)
+                        .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
                 return true;
