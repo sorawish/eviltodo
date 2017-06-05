@@ -2,8 +2,11 @@ package com.example.sorawish.evil_to_do;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by Sorawish on 6/5/2017.
@@ -44,5 +47,18 @@ public class Helper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(dbTable,dbColumn+" = ?",new String[]{task});
         db.close();
+    }
+
+    public ArrayList<String>getTaskList(){
+        ArrayList<String>taskList=new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(dbTable, new String[]{dbColumn},null,null,null,null,null);
+        while (cursor.moveToNext()) {
+            int index = cursor.getColumnIndex(dbColumn);
+            taskList.add(cursor.getString(index));
+        }
+        cursor.close();
+        db.close();
+        return taskList;
     }
 }
